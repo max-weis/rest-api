@@ -1,36 +1,30 @@
 package app
 
 import (
-	"net/http"
 	"encoding/json"
+	"net/http"
 )
 
-func (a *App) handleBookGet() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		json.NewEncoder(w).Encode("handleBookGet Hit!")
-	}
+func handlePing(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("PONG")
 }
 
-func (a *App) handleBookGetList() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		json.NewEncoder(w).Encode("handleBookGetList Hit!")
-	}
+func handleBookGet(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("handleBookGet Hit!")
 }
 
-func (a *App) handleBookCreate() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		json.NewEncoder(w).Encode("handleBookCreate Hit!")
-	}
+func handleBookGetList(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("handleBookGetList Hit!")
 }
 
-func (a *App) handleBookUpdate() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		json.NewEncoder(w).Encode("handleBookUpdate Hit!")
-	}
+func handleBookCreate(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("handleBookCreate Hit!")
 }
 
-func (a *App) handleBookDelete() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request){
-		json.NewEncoder(w).Encode("handleBookDelete Hit!")
-	}
+func handleBookUpdate(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("handleBookUpdate Hit!")
+}
+
+func handleBookDelete(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("handleBookDelete Hit!")
 }

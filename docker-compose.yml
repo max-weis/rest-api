@@ -10,6 +10,20 @@ services:
       POSTGRES_DB: app
     ports:
       - 5432:5432
+    volumes:
+      - ./db/1-schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      #- ./db/2-data.sql:/docker-entrypoint-initdb.d/2-data.sql
+  db-monitor:
+    image: meedan/pgadmin
+    ports:
+      - 5050:5050
+    links:
+      - db:postgres-test
+    depends_on:
+      - db
+    #hostname=db
+    #user=postgres
+    #pass=postgres
   app:
     image: baroprime/prod-rest
     build:
