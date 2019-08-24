@@ -1,20 +1,19 @@
 FROM golang:1.12-alpine3.9 as builder
 
-ARG APP_NAME
-
 ENV GO111MODULE=on
 
-WORKDIR $GOPATH/app
+WORKDIR $GOPATH/app/
 
 RUN apk add git
-COPY go.* ./
+COPY go.mod .
+COPY go.sum .
 RUN go mod download
 #compile app
-COPY . ./
-RUN CGO_ENABLED=0 GOOS=linux go build -o $APP_NAME ./cmd/$APP_NAME/$APP_NAME.go 
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
 
 #resulting app
 FROM scratch as final
-COPY --from=builder go/$APP_NAME /app/$APP_NAME
+COPY --from=builder go/app/server /app/server
 WORKDIR /app
-CMD ./$APP_NAME
+ENTRYPOINT [ "./server" ]
