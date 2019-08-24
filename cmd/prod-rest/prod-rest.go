@@ -1,28 +1,22 @@
 package main
 
 import (
-	. "gitlab.com/baroprime/prod-rest/app"
-	"gitlab.com/baroprime/prod-rest/internal"
+	"gitlab.com/baroprime/prod-rest/app"
 )
 
 func main() {
-	// init the environment configuration
-	conf := internal.NewConfiguration()
-	// init the resolver
-	resolv := internal.NewResolver(conf)
 	// init the router
-	router := internal.NewRouter()
-
-	// init the repo with the help of the resolver
-	repo := Repo{
-		DB: resolv.ResolveDB("postgres"),
-	}
+	router := app.NewRouter()
+	// init the db
+	db := app.NewDB()
+	//init the logger
+	logger := app.NewLogger()
 
 	// init the app
 	a := App{
-		Logger: resolv.ResolveLogger(),
-		Repo:   repo,
+		Logger: logger,
+		DB:     db,
 		Router: *router,
 	}
-	a.Run(":8080")
+	a.Run(":7171")
 }
