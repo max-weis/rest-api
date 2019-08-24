@@ -2,11 +2,12 @@ package app
 
 import (
 	"database/sql"
-
-	_ "github.com/lib/pq"
 	"fmt"
 	"net/http"
 	"os"
+
+	// postgres dialect
+	_ "github.com/lib/pq"
 
 	mapper "github.com/birkirb/loggers-mapper-logrus"
 	"github.com/gorilla/mux"
