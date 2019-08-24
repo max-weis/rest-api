@@ -18,5 +18,5 @@ func main() {
 		DB:     db,
 		Router: *router,
 	}
-	a.Run(":7171")
+	a.Run(":8080")
 }
