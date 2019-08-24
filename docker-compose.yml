@@ -31,6 +31,8 @@ services:
     image: baroprime/prod-rest
     build:
       context: .
+    ports:
+      - 8081:80
     environment:
       DB_USER: postgres
       DB_PASS: postgres
