@@ -1,0 +1,1 @@
+INSERT INTO books(isbn,name,desc,author,rating) VALUES(12434234,"Book","Book about Books","Max",5)
