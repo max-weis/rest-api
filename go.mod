@@ -4,6 +4,7 @@ go 1.12
 
 require (
 	github.com/birkirb/loggers-mapper-logrus v0.0.0-20180326232643-461f2d8e6f72
+	github.com/cweill/gotests v1.5.3 // indirect
 	github.com/gorilla/mux v1.7.3
 	github.com/karrick/godirwalk v1.10.12 // indirect
 	github.com/keegancsmith/rpc v1.1.0 // indirect

@@ -1,5 +1,7 @@
 github.com/birkirb/loggers-mapper-logrus v0.0.0-20180326232643-461f2d8e6f72 h1:P06eEm4EOIx6W81NgBAxYzhtA4F3O00gtcqHIROMVBE=
 github.com/birkirb/loggers-mapper-logrus v0.0.0-20180326232643-461f2d8e6f72/go.mod h1:g/bxAymxtTXleU0tnlQBv0vG4LNsumFHvdx6FZANooM=
+github.com/cweill/gotests v1.5.3 h1:k3t4wW/x/YNixWZJhUIn+mivmK5iV1tJVOwVYkx0UcU=
+github.com/cweill/gotests v1.5.3/go.mod h1:XZYOJkGVkCRoymaIzmp9Wyi3rUgfA3oOnkuljYrjFV8=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
