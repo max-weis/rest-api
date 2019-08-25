@@ -11,6 +11,9 @@ stages:
   - test
   - build
 
+before_script:
+  - apk add git
+
 test:
   stage: test
   script:
