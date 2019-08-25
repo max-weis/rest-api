@@ -91,7 +91,7 @@ func NewConfig() Config {
 func getEnvVar(key string) string {
 	val := os.Getenv(key)
 	if val == "" {
-		panic(fmt.Sprintf("Could not set %s", key))
+		fmt.Fprintf(os.Stderr, "Could not find env %s\n", key)
 	}
 	return val
 }
