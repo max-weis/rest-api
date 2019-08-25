@@ -8,6 +8,14 @@ import (
 	_ "github.com/lib/pq"
 )
 
+var (
+	getOne    = `SELECT "ISBN","Name","Description","Author","Rating" FROM public.book WHERE "ISBN" = $1`
+	getAll    = `SELECT "ISBN","Name","Description","Author","Rating" FROM public.book`
+	createOne = `INSERT INTO public.book("ISBN","Name","Description","Author","Rating") VALUES($1,$2,$3,$4,$5) RETURNING "ISBN"`
+	updateOne = `UPDATE public.book SET "ISBN"=$1,"Name"=$2, "Description"=$3, "Author"=$4, "Rating"=$5 WHERE "ISBN" = $1 RETURNING "ISBN"`
+	deleteOne = `DELETE FROM public.book WHERE "ISBN" = $1`
+)
+
 // GetBook queries db for a specifi book
 func GetBook(a *App, bookISBN string) (Book, error) {
 	book := Book{}
@@ -17,7 +25,7 @@ func GetBook(a *App, bookISBN string) (Book, error) {
 	var author string
 	var rating string
 
-	err := a.DB.QueryRow(`SELECT "ISBN","Name","Description","Author","Rating" FROM public.book WHERE "ISBN" = $1`, bookISBN).Scan(&isbn, &name, &desc, &author, &rating)
+	err := a.DB.QueryRow(getOne, bookISBN).Scan(&isbn, &name, &desc, &author, &rating)
 	if err != nil {
 		return book, err
 	}
@@ -29,7 +37,7 @@ func GetBook(a *App, bookISBN string) (Book, error) {
 //GetAllBooks queries the db for all books
 func GetAllBooks(a *App) ([]Book, error) {
 	books := []Book{}
-	rows, err := a.DB.Query(`SELECT "ISBN","Name","Description","Author","Rating" FROM public.book`)
+	rows, err := a.DB.Query(getAll)
 	defer rows.Close()
 
 	if err != nil {
@@ -57,7 +65,7 @@ func GetAllBooks(a *App) ([]Book, error) {
 func CreateBook(a *App, b Book) (string, error) {
 	var isbn string
 	err := a.DB.QueryRow(
-		`INSERT INTO public.book("ISBN","Name","Description","Author","Rating") VALUES($1,$2,$3,$4,$5) RETURNING "ISBN"`,
+		createOne,
 		b.ISBN, b.Name, b.Description, b.Author, b.Rating,
 	).Scan(&isbn)
 
@@ -71,7 +79,7 @@ func CreateBook(a *App, b Book) (string, error) {
 func UpdateBook(a *App, b Book) (string, error) {
 	var isbn string
 	err := a.DB.QueryRow(
-		`UPDATE public.book SET "ISBN"=$1,"Name"=$2, "Description"=$3, "Author"=$4, "Rating"=$5 WHERE "ISBN" = $1 RETURNING "ISBN"`,
+		updateOne,
 		b.ISBN, b.Name, b.Description, b.Author, b.Rating,
 	).Scan(&isbn)
 
@@ -83,7 +91,10 @@ func UpdateBook(a *App, b Book) (string, error) {
 
 // DeleteBook deletes a book from the db
 func DeleteBook(a *App, bookISBN string) (string, error) {
-	_, err := a.DB.Query(`DELETE FROM public.book WHERE "ISBN" = $1`, bookISBN)
+	_, err := a.DB.Query(
+		deleteOne,
+		bookISBN,
+	)
 	if err != nil {
 		return "", err
 	}
