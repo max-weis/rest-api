@@ -1,4 +1,4 @@
-image: golang:1.13rc1-alpine3.10
+image: golang
 
 cache:
   paths:
@@ -10,9 +10,6 @@ cache:
 stages:
   - test
   - build
-
-before_script:
-  - apk add git
 
 test:
   stage: test
