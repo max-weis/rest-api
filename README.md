@@ -10,7 +10,7 @@ A simple sample REST API which uses `gorilla/mux`, `sirupsen/logrus` and Postgre
     - [db](#package-app-db)
 - [package models](#package-models)
 
-## Project Structure
+## Project Structure <a id="project-structure"></a>
 ```
 ├── app                     // contains the main parts of the app
 │   ├── app.go              // defines and inits all components of the app
@@ -29,7 +29,7 @@ A simple sample REST API which uses `gorilla/mux`, `sirupsen/logrus` and Postgre
 └── README.md
 ```
 
-## The Main
+## The Main <a id="main"></a>
 
 The main is pretty self explanatory.
 
@@ -51,9 +51,9 @@ First we init the __config__ and __app__.
 In the next step, the __config__ is used to initialize the application.
 And the last step starts the API with the specified port
 
-## Package `app`
+## Package `app` <a id="package-app"></a>
 
-### `app.go`
+### `app.go` <a id="package-app-app"></a>
 
 Here we define all the components the application needs. Like the __config__, __logger__, __db__ und __router__.
 
@@ -61,16 +61,16 @@ Here we define all the components the application needs. Like the __config__, __
 
 `Run()` fianlly starts the app
 
-### `controller.go`
+### `controller.go` <a id="package-app-controller"></a>
 
 This file contains all the `HandlerFuncs` for the API.
 They return a __HandlerFunc__ to make it possible for some configuration or resilience .
 
-### `db.go`
+### `db.go` <a id="package-app-db"></a>
 
 Here does all the magic happen.
 All these function implement the CRUD operations on the database.
 
-## Package `models`
+## Package `models` <a id="package-models"></a>
 
 In this package all the models are defined. In this example its only one.
