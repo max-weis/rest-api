@@ -1,52 +1,83 @@
 package app
 
 import (
-	"gitlab.com/baroprime/prod-rest/db"
 	"encoding/json"
+	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
+	// use a dot import to avoid models.Book
 	. "gitlab.com/baroprime/prod-rest/models"
 )
 
 func handleGet(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		respondJSON(w, 200, "handleGet Hit!")
+		vars := mux.Vars(r)
+		isbn := vars["isbn"]
+		book, err := GetBook(a, isbn)
+		if err != nil {
+			a.Logger.Warn(err)
+			respondJSON(w, 400, fmt.Sprintf("Could not find a Book with an ISBN = %s", isbn))
+			return
+		}
+		respondJSON(w, 200, book)
 	}
 }
 func handleGetAll(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		respondJSON(w, 200, "handleGetAll Hit!")
-		books,err := GetAllBooks(a)
-		if err != nil{
-			respondJSON(w,500,"Could not find any Books")
+		books, err := GetAllBooks(a)
+		if err != nil {
+			a.Logger.Warn(err)
+			respondJSON(w, 500, "Could not find any Books")
+			return
 		}
 
-		err = json.NewDecoder()
+		respondJSON(w, 200, books)
 	}
 }
 func handleCreateNew(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		respondJSON(w, 200, "handleCreateNew Hit!")
 		book := Book{}
 		err := json.NewDecoder(r.Body).Decode(&book)
 		if err != nil {
 			respondJSON(w, 404, "Could not read new Book")
+			return
 		}
-		isbn,err = CreateBook(a)
-		if err != nil{
+		isbn, err := CreateBook(a, book)
+		if err != nil {
 			respondJSON(w, 404, "Could not create new Book")
+			return
 		}
-		respondJSON(w,200,fmt.Sprintf("Created new Book with ISBN:%s",isbn))
+		respondJSON(w, 200, fmt.Sprintf("Created new Book with ISBN:%s", isbn))
 	}
 }
 func handleUpdate(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		respondJSON(w, 200, "handleUpdate Hit!")
+		book := Book{}
+		err := json.NewDecoder(r.Body).Decode(&book)
+		if err != nil {
+			respondJSON(w, 404, "Could not read the Book")
+			return
+		}
+		_, err = UpdateBook(a, book)
+		if err != nil {
+			respondJSON(w, 404, "Could not update the Book")
+			return
+		}
+		respondJSON(w, 200, book)
 	}
 }
 func handleDelete(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		respondJSON(w, 200, "handleDelete Hit!")
+		vars := mux.Vars(r)
+		isbn := vars["isbn"]
+
+		_, err := DeleteBook(a, isbn)
+		if err != nil {
+			a.Logger.Warn(err)
+			return
+		}
+		respondJSON(w, 200, fmt.Sprintf("Removed Book with ISBN:%s", isbn))
 	}
 }
 
