@@ -1,18 +1,10 @@
---CREATE TABLE IF NOT EXISTS book(
---   ISBN int PRIMARY KEY,
---   Name varchar(255) NOT NULL,
---   Description varchar(255) NOT NULL,
---   Author varchar(255) NOT NULL,
---   Rating int NOT NULL
---;
-
 CREATE TABLE public.book
 (
-    "ISBN" integer NOT NULL,
+    "ISBN" text COLLATE pg_catalog."default" NOT NULL,
     "Name" text COLLATE pg_catalog."default" NOT NULL,
     "Description" text COLLATE pg_catalog."default" NOT NULL,
     "Author" text COLLATE pg_catalog."default" NOT NULL,
-    "Rating" integer NOT NULL,
+    "Rating" text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT book_pkey PRIMARY KEY ("ISBN")
 )
 WITH (
