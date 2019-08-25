@@ -98,7 +98,7 @@ func getEnvVar(key string) string {
 
 func (c Config) getConnectionString() string {
 	return fmt.Sprintf(
-		"user=%s password=%s host=%s port=%s dbname=%s",
+		"user=%s password=%s host=%s port=%s dbname=%s sslmode=disable",
 		c.dbUser, c.dbPass, c.dbHost, c.dbPort, c.dbName,
 	)
 }
