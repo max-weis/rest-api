@@ -2,9 +2,9 @@ package models
 
 //Book is a model for the demo app
 type Book struct {
-	ISBN        int    `json:"isbn"`
+	ISBN        string `json:"isbn"`
 	Name        string `json:"name"`
 	Description string `json:"desc"`
 	Author      string `json:"author"`
-	Rating      int    `json:"rating"`
+	Rating      string `json:"rating"`
 }
