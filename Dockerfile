@@ -1,10 +1,9 @@
-FROM golang:1.12-alpine3.9 as builder
-
-ENV GO111MODULE=on
+FROM golang:1.13rc1-alpine3.10 as builder
 
 WORKDIR $GOPATH/app/
 
 RUN apk add git
+
 COPY go.mod .
 COPY go.sum .
 RUN go mod download
