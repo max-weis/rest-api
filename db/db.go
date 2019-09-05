@@ -1,12 +1,21 @@
-package app
+package db
 
 import (
-	// use a dot import to avoid models.Book
-	. "gitlab.com/baroprime/prod-rest/models"
 
 	// postgres dialect
 	_ "github.com/lib/pq"
+	"database/sql"
+
 )
+
+//Book is a model for the demo app
+type Book struct {
+	ISBN        string `json:"isbn"`
+	Name        string `json:"name"`
+	Description string `json:"desc"`
+	Author      string `json:"author"`
+	Rating      string `json:"rating"`
+}
 
 var (
 	getOne    = `SELECT "ISBN","Name","Description","Author","Rating" FROM public.book WHERE "ISBN" = $1`
@@ -17,7 +26,7 @@ var (
 )
 
 // GetBook queries db for a specifi book
-func GetBook(a *App, bookISBN string) (Book, error) {
+func GetBook(db *sql.DB, bookISBN string) (Book, error) {
 	book := Book{}
 	var isbn string
 	var name string
@@ -25,7 +34,7 @@ func GetBook(a *App, bookISBN string) (Book, error) {
 	var author string
 	var rating string
 
-	err := a.DB.QueryRow(getOne, bookISBN).Scan(&isbn, &name, &desc, &author, &rating)
+	err := db.QueryRow(getOne, bookISBN).Scan(&isbn, &name, &desc, &author, &rating)
 	if err != nil {
 		return book, err
 	}
@@ -35,9 +44,9 @@ func GetBook(a *App, bookISBN string) (Book, error) {
 }
 
 //GetAllBooks queries the db for all books
-func GetAllBooks(a *App) ([]Book, error) {
+func GetAllBooks(db *sql.DB) ([]Book, error) {
 	books := []Book{}
-	rows, err := a.DB.Query(getAll)
+	rows, err := db.Query(getAll)
 	defer rows.Close()
 
 	if err != nil {
@@ -62,9 +71,9 @@ func GetAllBooks(a *App) ([]Book, error) {
 }
 
 //CreateBook inserts book into db
-func CreateBook(a *App, b Book) (string, error) {
+func CreateBook(db *sql.DB, b Book) (string, error) {
 	var isbn string
-	err := a.DB.QueryRow(
+	err := db.QueryRow(
 		createOne,
 		b.ISBN, b.Name, b.Description, b.Author, b.Rating,
 	).Scan(&isbn)
@@ -76,9 +85,9 @@ func CreateBook(a *App, b Book) (string, error) {
 }
 
 //UpdateBook updates a book
-func UpdateBook(a *App, b Book) (string, error) {
+func UpdateBook(db *sql.DB, b Book) (string, error) {
 	var isbn string
-	err := a.DB.QueryRow(
+	err := db.QueryRow(
 		updateOne,
 		b.ISBN, b.Name, b.Description, b.Author, b.Rating,
 	).Scan(&isbn)
@@ -90,8 +99,8 @@ func UpdateBook(a *App, b Book) (string, error) {
 }
 
 // DeleteBook deletes a book from the db
-func DeleteBook(a *App, bookISBN string) (string, error) {
-	_, err := a.DB.Query(
+func DeleteBook(db *sql.DB, bookISBN string) (string, error) {
+	_, err := db.Query(
 		deleteOne,
 		bookISBN,
 	)
