@@ -6,19 +6,16 @@ A simple sample REST API which uses `gorilla/mux`, `sirupsen/logrus` and Postgre
 - [Main](#main)
 - [package app](#package-app)
     - [app](#package-app-app)
-    - [controller](#package-app-controller)
     - [db](#package-app-db)
-- [package models](#package-models)
 
 ## Project Structure <a id="project-structure"></a>
 ```
 ├── app                     // contains the main parts of the app
 │   ├── app.go              // defines and inits all components of the app
-│   ├── controller.go       // contains the REST endpoints
-│   └── db.go               // defines functions for the CRUD operations
-├── models                  // stores the models for the app
-│   └── book.go
-└── resources               // sql stuff
+│   └── controller.go       // contains the REST endpoints
+├── db                      // stores the models for the app
+│   └── db.go
+└── resources               // defines functions for the CRUD operations
     ├── 1-schema.sql
     └── 2-data.sql
 ├── docker-compose.yml
