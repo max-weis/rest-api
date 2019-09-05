@@ -36,7 +36,7 @@ func handleGetAll(a *App) http.HandlerFunc {
 }
 func handleCreateNew(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		book := Book{}
+		book := db.Book{}
 		err := json.NewDecoder(r.Body).Decode(&book)
 		if err != nil {
 			respondJSON(w, 404, "Could not read new Book")
@@ -52,7 +52,7 @@ func handleCreateNew(a *App) http.HandlerFunc {
 }
 func handleUpdate(a *App) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		book := Book{}
+		book := db.Book{}
 		err := json.NewDecoder(r.Body).Decode(&book)
 		if err != nil {
 			respondJSON(w, 404, "Could not read the Book")

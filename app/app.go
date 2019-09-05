@@ -53,6 +53,7 @@ func (a *App) SetRoute() {
 	a.Router.Methods("POST").Path("/api/books").Handler(handleCreateNew(a))
 	a.Router.Methods("PUT").Path("/api/books").Handler(handleUpdate(a))
 	a.Router.Methods("DELETE").Path("/api/books/{isbn}").Handler(handleDelete(a))
+	a.Logger.Info("Routes initialized")
 }
 
 // NewApp creates an app object
@@ -62,9 +63,10 @@ func NewApp() App {
 
 // Init initalizes the app
 func (a *App) Init(c Config) {
+	a.Logger = newLogger()
 	a.Config = c
 	a.DB = newDB(a.Config)
-	a.Logger = newLogger()
+	a.Logger.Info("Config loaded")
 	a.Router = newRouter()
 }
 
