@@ -6,7 +6,8 @@ A simple sample REST API which uses `gorilla/mux`, `sirupsen/logrus` and Postgre
 - [Main](#main)
 - [package app](#package-app)
     - [app](#package-app-app)
-    - [db](#package-app-db)
+- [package app](#package-db)
+
 
 ## Project Structure <a id="project-structure"></a>
 ```
@@ -63,11 +64,7 @@ Here we define all the components the application needs. Like the __config__, __
 This file contains all the `HandlerFuncs` for the API.
 They return a __HandlerFunc__ to make it possible for some configuration or resilience .
 
-### `db.go` <a id="package-app-db"></a>
+### Package `db.go` <a id="package-db"></a>
 
 Here does all the magic happen.
 All these function implement the CRUD operations on the database.
-
-## Package `models` <a id="package-models"></a>
-
-In this package all the models are defined. In this example its only one.
