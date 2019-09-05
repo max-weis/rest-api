@@ -46,6 +46,15 @@ func newRouter() *mux.Router {
 	return mux.NewRouter()
 }
 
+// SetRoute bootstraps the routes to the router
+func (a *App) SetRoute() {
+	a.Router.Methods("GET").Path("/api/books/{isbn}").Handler(handleGet(a))
+	a.Router.Methods("GET").Path("/api/books").Handler(handleGetAll(a))
+	a.Router.Methods("POST").Path("/api/books").Handler(handleCreateNew(a))
+	a.Router.Methods("PUT").Path("/api/books").Handler(handleUpdate(a))
+	a.Router.Methods("DELETE").Path("/api/books/{isbn}").Handler(handleDelete(a))
+}
+
 // NewApp creates an app object
 func NewApp() App {
 	return App{}
