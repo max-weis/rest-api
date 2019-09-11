@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/baroprime/prod-rest/app"
+	"postgres-api/app"
 )
 
 func main() {

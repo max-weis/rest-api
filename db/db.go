@@ -1,11 +1,9 @@
 package db
 
 import (
-
+	"database/sql"
 	// postgres dialect
 	_ "github.com/lib/pq"
-	"database/sql"
-
 )
 
 //Book is a model for the demo app
@@ -18,16 +16,16 @@ type Book struct {
 }
 
 var (
-	getOne    = `SELECT "ISBN","Name","Description","Author","Rating" FROM public.book WHERE "ISBN" = $1`
-	getAll    = `SELECT "ISBN","Name","Description","Author","Rating" FROM public.book`
+	getOne    = `SELECT * FROM public.book WHERE "ISBN" = ?`
+	getAll    = `SELECT * FROM public.book`
 	createOne = `INSERT INTO public.book("ISBN","Name","Description","Author","Rating") VALUES($1,$2,$3,$4,$5) RETURNING "ISBN"`
 	updateOne = `UPDATE public.book SET "ISBN"=$1,"Name"=$2, "Description"=$3, "Author"=$4, "Rating"=$5 WHERE "ISBN" = $1 RETURNING "ISBN"`
 	deleteOne = `DELETE FROM public.book WHERE "ISBN" = $1`
 )
 
-// GetBook queries db for a specifi book
+// GetBook queries db for a specific book
 func GetBook(db *sql.DB, bookISBN string) (Book, error) {
-	book := Book{}
+	var book Book
 	var isbn string
 	var name string
 	var desc string
@@ -45,7 +43,7 @@ func GetBook(db *sql.DB, bookISBN string) (Book, error) {
 
 //GetAllBooks queries the db for all books
 func GetAllBooks(db *sql.DB) ([]Book, error) {
-	books := []Book{}
+	var books []Book
 	rows, err := db.Query(getAll)
 	defer rows.Close()
 

@@ -1,8 +1,6 @@
-FROM golang:1.13rc1-alpine3.10 as builder
+FROM baroprime/go as builder
 
 WORKDIR $GOPATH/app/
-
-RUN apk add git
 
 COPY go.mod .
 COPY go.sum .
