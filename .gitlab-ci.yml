@@ -17,7 +17,7 @@ test:
 
 docker:
   stage: docker
-  image: docker:18.09.7
+  image: docker:18.09.7-dind
   before_script:
     - docker info
     - docker login registry.gitlab.com -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
