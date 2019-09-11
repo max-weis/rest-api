@@ -5,9 +5,6 @@ stages:
   - test
   - docker
 
-services:
-  - docker:dind
-
 Building Go Binary:
   stage: build
   script:
@@ -22,7 +19,6 @@ Building and Pushing Docker image:
   stage: docker
   image: docker:lastest
   before_script:
-    - docker info
     - docker login registry.gitlab.com -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
   script:
     - docker image build -t ${CI_REGISTRY}/${CI_PROJECT_PATH}:latest .
