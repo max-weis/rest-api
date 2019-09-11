@@ -5,19 +5,22 @@ stages:
   - test
   - docker
 
-build:
+services:
+  - docker:dind
+
+Building Go Binary:
   stage: build
   script:
     - go build
 
-test:
+Testing Go App:
   stage: test
   script:
     - go test ./... -v
 
-docker:
+Building and Pushing Docker image:
   stage: docker
-  image: docker:18.09.7-dind
+  image: docker:lastest
   before_script:
     - docker info
     - docker login registry.gitlab.com -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
