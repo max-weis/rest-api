@@ -12,5 +12,5 @@ func main() {
 	// init app
 	app.Init(config)
 	// run app
-	app.Run(":80")
+	app.Run(":8080")
 }
