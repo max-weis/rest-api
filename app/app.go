@@ -47,6 +47,7 @@ func newRouter() *mux.Router {
 
 // SetRoute bootstraps the routes to the router
 func (a *App) SetRoute() {
+	a.Logger.Info("initializing routes")
 	a.Router.Methods("GET").Path("/api/books/{isbn}").Handler(handleGet(a))
 	a.Router.Methods("GET").Path("/api/books").Handler(handleGetAll(a))
 	a.Router.Methods("POST").Path("/api/books").Handler(handleCreateNew(a))
@@ -74,6 +75,9 @@ func (a *App) Run(port string) {
 	a.Logger.Info("App starting")
 	a.SetRoute()
 
-	http.ListenAndServe(port, a.Router)
+	a.Logger.Info("App listening")
+	if err := http.ListenAndServe(port, a.Router); err != nil {
+		a.Logger.Errorf("could not serve, %+v", err)
+	}
 	a.Logger.Info("Mission complete")
 }
