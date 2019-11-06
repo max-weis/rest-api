@@ -2,7 +2,7 @@ stages:
   - go-build
   - go-test
 
-image: golang:1.13-alpine
+image: golang:1.13
 
 build:
   stage: go-build
