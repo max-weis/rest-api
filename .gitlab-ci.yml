@@ -1,24 +1,27 @@
 stages:
   - go-build
   - go-test
-  - container-image-build
+  - container-build
 
-image: golang:1.13
 
 build:
   stage: go-build
+  image: golang:1.13
+
   script:
     - go build
 
 test:
   stage: go-test
+  image: golang:1.13
+
   script:
     - go test ./... -v
 
-container-image:
-  stage: container-image-build
+build-image:
+  stage: container-build
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-    script:
-      - /kaniko/executor --dockerfile Dockerfile
+  script:
+    - /kaniko/executor --dockerfile Dockerfile
