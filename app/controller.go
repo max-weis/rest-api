@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"postgres-api/db"
+
 	"github.com/gorilla/mux"
-	"gitlab.com/baroprime/prod-rest/db"
 )
 
 func handleGet(a *App) http.HandlerFunc {
