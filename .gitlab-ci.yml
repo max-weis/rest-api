@@ -3,18 +3,15 @@ stages:
   - go-test
   - container-build-push
 
-
 build:
   stage: go-build
   image: golang:1.13
-
   script:
     - go build
 
 test:
   stage: go-test
   image: golang:1.13
-
   script:
     - go test ./... -v
 
