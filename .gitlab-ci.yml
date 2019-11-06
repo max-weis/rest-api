@@ -1,14 +1,13 @@
 stages:
   - go-build
   - go-test
-  - container-build
 
-image: golang:1.13-alpine
+image: golang:1.13
 
 build:
   stage: go-build
   script:
-    - CGO_ENABLED=0 GOOS=linux go build
+    - go build
 
 test:
   stage: go-test
