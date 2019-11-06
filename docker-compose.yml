@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  db:
+  postgresql:
     image: postgres:alpine
     environment:
       POSTGRES_USER: postgres
@@ -19,9 +19,9 @@ services:
     ports:
       - 5050:5050
     links:
-      - db:postgres-test
+      - postgresql:postgres-test
     depends_on:
-      - db
+      - postgresql
     #hostname=db
     #user=postgres
     #pass=postgres
@@ -29,15 +29,13 @@ services:
 
   app:
     image: baroprime/prod-rest
-    build:
-      context: .
     ports:
-      - 8081:80
+      - 8081:8080
     environment:
       DB_USER: postgres
       DB_PASS: postgres
-      DB_HOST: db
+      DB_HOST: postgresql
       DB_PORT: 5432
       DB_NAME: app
     depends_on:
-      - db
+      - postgresql
