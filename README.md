@@ -1,4 +1,4 @@
-# Production REST API
+# REST API
 
 A simple sample REST API which uses `gorilla/mux`, `sirupsen/logrus` and Postgres
 
